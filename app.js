@@ -93,7 +93,7 @@ db.ref().child("users").child(userID).child("Exercises").child(exerciseKey).once
       notification.alert = challengerEmail + " sent you a challenge!";
 
       // Send any extra payload data with the notification which will be accessible to your app in didReceiveRemoteNotification
-      notification.payload = {exercise:exerciseRetrieved, challenger:challengerEmail};
+      notification.payload = {exercise:exerciseRetrieved};
 
       // Actually send the notification
       apnProvider.send(notification, deviceToken).then(function(result) {
