@@ -5,7 +5,6 @@ var apn = require('apn');
 
 var exerciseRetrieved = "";
 
-
 // var admin = require('firebase-admin'); <-- install this
 // admin is allowed to traverse any tree if the rules says it can
 var admin = require("firebase-admin");
@@ -21,7 +20,6 @@ admin.initializeApp({
 });
 
 var db = admin.database();
-
 
 const PORT = process.argv[2] || 3001;
 
@@ -92,7 +90,7 @@ db.ref().child("users").child(userID).child("Exercises").child(exerciseKey).once
       // Display the following message (the actual notification text, supports emoji)
 
       //pull email out and send
-      notification.alert = challengerEmail + " challenged you to a workout!";
+      notification.alert = challengerEmail + " sent you a challenge!";
 
       // Send any extra payload data with the notification which will be accessible to your app in didReceiveRemoteNotification
       notification.payload = {exercise:exerciseRetrieved, challenger:challengerEmail};
