@@ -56,10 +56,15 @@ application.post('/challenges', function(req, res, next) {
     var intNum = 0;
 
     function formateEmail(email){
-       var tempEmail = ""
+      var tempEmail = "";
        tempEmail = email.replace("@", "%40");
-       tempEmail = tempEmail.replace(".", "%2E");
-       return tempEmail
+       console.log("FIRST Change");
+       console.log(tempEmail);
+       tempEmail = tempEmail.split('.').join('%2E');
+       console.log("Second Change");
+       console.log(tempEmail);
+
+       return tempEmail;
    }
 
    //CHECK IF EXERCISE IS RETRIEVED FROM USER EXERCISES OR CLIENT EXERCISES
@@ -72,6 +77,7 @@ application.post('/challenges', function(req, res, next) {
           console.log(exerciseRetrieved);
       db.ref().child("emails").child(formattedOpponentEmail).once("value", function(snapshot){
         var userKey = snapshot.val()
+        console.log("USERKEY");
         console.log(userKey);
 
         db.ref().child("users").child(userKey).child("Challenges").child(exerciseKey).update(exerciseRetrieved);
