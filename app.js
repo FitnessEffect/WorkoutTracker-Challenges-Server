@@ -45,7 +45,6 @@ application.post('/challenges', function(req, res, next) {
     console.log("clientKey");
     console.log(clientKey);
 
-
     var formattedEmail = formateEmail(challengerEmail);
     var formattedOpponentEmail = formateEmail(opponentEmail);
     console.log("FORMATTED OPPONENT EMAIL");
@@ -78,56 +77,56 @@ application.post('/challenges', function(req, res, next) {
                 db.ref().child("users").child(userKey).child("Challenges").child(exerciseKey).update(exerciseRetrieved);
             });
 
-            //Set up apn with the APNs Auth Key
-            var apnProvider = new apn.Provider({
-                token: {
-                    key: 'apns.p8', // Path to the key p8 file
-                    keyId: '35WXBSSCNU', // The Key ID of the p8 file (available at https://developer.apple.com/account/ios/certificate/key)
-                    teamId: 'JF325HQHWJ', // The Team ID of your Apple Developer Account (available at https://developer.apple.com/account/#/membership/)
-                },
-                production: false // Set to true if sending a notification to a production iOS app
-            });
-
-            //perform look up using email to find key
-            db.ref().child("token").once("value", function(snapshot) {
-                var emails = snapshot.val();
-                console.log("DICTIONARY");
-                console.log(emails);
-
-                let deviceToken = emails[formattedOpponentEmail];
-
-                console.log(deviceToken);
-                // Prepare a new notification
-                var notification = new apn.Notification();
-
-                // Specify your iOS app's Bundle ID (accessible within the project editor)
-                notification.topic = 'com.stefan.auvergne.WorkoutTracker';
-
-                // Set expiration to 1 hour from now (in case device is offline)
-                notification.expiry = Math.floor(Date.now() / 1000) + 3600;
-
-                // Set app badge indicator
-                notification.badge = intNum;
-
-                // Play ping.aiff sound when the notification is received
-                notification.sound = 'ping.aiff';
-
-                // Display the following message (the actual notification text, supports emoji)
-
-                //pull email out and send
-                notification.alert = challengerEmail + " sent you a challenge!";
-
-                // Send any extra payload data with the notification which will be accessible to your app in didReceiveRemoteNotification
-                notification.payload = {
-                    exercise: exerciseRetrieved
-                };
-
-                // Actually send the notification
-                apnProvider.send(notification, deviceToken).then(function(result) {
-                    // Check the result for any failed devices
-                    console.log(JSON.stringify(result));
-                    console.log(result);
-                });
+            // //Set up apn with the APNs Auth Key
+            // var apnProvider = new apn.Provider({
+            //     token: {
+            //         key: 'apns.p8', // Path to the key p8 file
+            //         keyId: '35WXBSSCNU', // The Key ID of the p8 file (available at https://developer.apple.com/account/ios/certificate/key)
+            //         teamId: 'JF325HQHWJ', // The Team ID of your Apple Developer Account (available at https://developer.apple.com/account/#/membership/)
+            //     },
+            //     production: false // Set to true if sending a notification to a production iOS app
+            // });
+            //
+            // //perform look up using email to find key
+            // db.ref().child("token").once("value", function(snapshot) {
+            //     var emails = snapshot.val();
+            //     console.log("DICTIONARY");
+            //     console.log(emails);
+            //
+            //     let deviceToken = emails[formattedOpponentEmail];
+            //
+            //     console.log(deviceToken);
+            //     // Prepare a new notification
+            //     var notification = new apn.Notification();
+            //
+            //     // Specify your iOS app's Bundle ID (accessible within the project editor)
+            //     notification.topic = 'com.stefan.auvergne.WorkoutTracker';
+            //
+            //     // Set expiration to 1 hour from now (in case device is offline)
+            //     notification.expiry = Math.floor(Date.now() / 1000) + 3600;
+            //
+            //     // Set app badge indicator
+            //     notification.badge = intNum;
+            //
+            //     // Play ping.aiff sound when the notification is received
+            //     notification.sound = 'ping.aiff';
+            //
+            //     // Display the following message (the actual notification text, supports emoji)
+            //
+            //     //pull email out and send
+            //     notification.alert = challengerEmail + " sent you a challenge!";
+            //
+            //     // Send any extra payload data with the notification which will be accessible to your app in didReceiveRemoteNotification
+            //     notification.payload = {
+            //         exercise: exerciseRetrieved
+            //     };
+            //
+            //     // Actually send the notification
+            //     apnProvider.send(notification, deviceToken).then(function(result) {
+            //         // Check the result for any failed devices
+            //         console.log(JSON.stringify(result));
+            //         console.log(result);
+            //     });
 
                 //server response
                 res.status(200).send();
@@ -158,45 +157,45 @@ application.post('/challenges', function(req, res, next) {
             });
 
             //perform look up using email to find key
-            db.ref().child("token").once("value", function(snapshot) {
-                var emails = snapshot.val();
-                console.log("DICTIONARY");
-                console.log(emails);
-
-                let deviceToken = emails[formattedOpponentEmail];
-
-                console.log(deviceToken);
-                // Prepare a new notification
-                var notification = new apn.Notification();
-
-                // Specify your iOS app's Bundle ID (accessible within the project editor)
-                notification.topic = 'com.stefan.auvergne.WorkoutTracker';
-
-                // Set expiration to 1 hour from now (in case device is offline)
-                notification.expiry = Math.floor(Date.now() / 1000) + 3600;
-
-                // Set app badge indicator
-                notification.badge = intNum;
-
-                // Play ping.aiff sound when the notification is received
-                notification.sound = 'ping.aiff';
-
-                // Display the following message (the actual notification text, supports emoji)
-
-                //pull email out and send
-                notification.alert = challengerEmail + " sent you a challenge!";
-
-                // Send any extra payload data with the notification which will be accessible to your app in didReceiveRemoteNotification
-                notification.payload = {
-                    exercise: exerciseRetrieved
-                };
-
-                // Actually send the notification
-                apnProvider.send(notification, deviceToken).then(function(result) {
-                    // Check the result for any failed devices
-                    console.log(JSON.stringify(result));
-                    console.log(result);
-                });
+            // db.ref().child("token").once("value", function(snapshot) {
+            //     var emails = snapshot.val();
+            //     console.log("DICTIONARY");
+            //     console.log(emails);
+            //
+            //     let deviceToken = emails[formattedOpponentEmail];
+            //
+            //     console.log(deviceToken);
+            //     // Prepare a new notification
+            //     var notification = new apn.Notification();
+            //
+            //     // Specify your iOS app's Bundle ID (accessible within the project editor)
+            //     notification.topic = 'com.stefan.auvergne.WorkoutTracker';
+            //
+            //     // Set expiration to 1 hour from now (in case device is offline)
+            //     notification.expiry = Math.floor(Date.now() / 1000) + 3600;
+            //
+            //     // Set app badge indicator
+            //     notification.badge = intNum;
+            //
+            //     // Play ping.aiff sound when the notification is received
+            //     notification.sound = 'ping.aiff';
+            //
+            //     // Display the following message (the actual notification text, supports emoji)
+            //
+            //     //pull email out and send
+            //     notification.alert = challengerEmail + " sent you a challenge!";
+            //
+            //     // Send any extra payload data with the notification which will be accessible to your app in didReceiveRemoteNotification
+            //     notification.payload = {
+            //         exercise: exerciseRetrieved
+            //     };
+            //
+            //     // Actually send the notification
+            //     apnProvider.send(notification, deviceToken).then(function(result) {
+            //         // Check the result for any failed devices
+            //         console.log(JSON.stringify(result));
+            //         console.log(result);
+            //     });
 
                 //server response
                 res.status(200).send();
@@ -205,9 +204,9 @@ application.post('/challenges', function(req, res, next) {
     }
 });
 
-application.post("/ping", function(req, res, next) {
-    res.send("pong");
-});
+// application.post("/ping", function(req, res, next) {
+//     res.send("pong");
+// });
 
 application.listen(PORT, function() {
     console.log("The magic happens at port" + PORT);
