@@ -74,21 +74,8 @@ application.post('/challenges', function(req, res, next) {
                 var userKey = snapshot.val()
                 console.log("USERKEY");
                 console.log(userKey);
-
+                exerciseRetrieved["viewed"] = "false";
                 db.ref().child("users").child(userKey).child("Challenges").child(exerciseKey).update(exerciseRetrieved);
-            });
-
-
-            db.ref().child("notification").child(formattedOpponentEmail).once("value", function(snapshot) {
-                var num = snapshot.val();
-                intNum = parseInt(num, 10);
-
-                //if (isNaN(parsedNum)) return;
-
-                intNum = intNum + 1;
-                db.ref().child("notification").update({
-                    [formattedOpponentEmail]: intNum
-                });
             });
 
             //Set up apn with the APNs Auth Key
@@ -156,21 +143,8 @@ application.post('/challenges', function(req, res, next) {
             db.ref().child("emails").child(formattedOpponentEmail).once("value", function(snapshot) {
                 var userKey = snapshot.val()
                 console.log(userKey);
-
+                exerciseRetrieved["viewed"] = "false";
                 db.ref().child("users").child(userKey).child("Challenges").child(exerciseKey).update(exerciseRetrieved);
-            });
-
-
-            db.ref().child("notification").child(formattedOpponentEmail).once("value", function(snapshot) {
-                var num = snapshot.val();
-                intNum = parseInt(num, 10);
-
-                //if (isNaN(parsedNum)) return;
-
-                intNum = intNum + 1;
-                db.ref().child("notification").update({
-                    [formattedOpponentEmail]: intNum
-                });
             });
 
             //Set up apn with the APNs Auth Key
