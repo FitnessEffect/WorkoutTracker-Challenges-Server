@@ -129,8 +129,8 @@ application.post('/challenges', function(req, res, next) {
             //     });
 
                 //server response
-                res.status(200).send();
-            });
+            //    res.status(200).send();
+            //});
         });
     } else {
         db.ref().child("users").child(userID).child("Clients").child(clientKey).child("Exercises").child(exerciseKey).once("value", function(snapshot) {
@@ -198,8 +198,8 @@ application.post('/challenges', function(req, res, next) {
             //     });
 
                 //server response
-                res.status(200).send();
-            });
+            //    res.status(200).send();
+            //});
         });
     }
 });
