@@ -41,6 +41,13 @@ application.post('/challenges', function(req, res, next) {
     var opponentEmail = req.body.opponentEmail || '';
     var challengerEmail = req.body.userEmail || '';
     var clientKey = req.body.clientKey || '';
+    var exerciseYear = req.body.exerciseYear || '';
+    var exerciseWeek = req.body.exerciseWeek || '';
+
+    console.log("YEAR");
+    console.log(exerciseYear);
+    console.log("WEEK");
+    console.log("exerciseWeek");
 
     console.log("clientKey");
     console.log(clientKey);
@@ -63,7 +70,7 @@ application.post('/challenges', function(req, res, next) {
 
     //CHECK IF EXERCISE IS RETRIEVED FROM USER EXERCISES OR CLIENT EXERCISES
     if (clientKey == " ") {
-        db.ref().child("users").child(userID).child("Exercises").child(exerciseKey).once("value", function(snapshot) {
+        db.ref().child("users").child(userID).child("Exercises").child(exerciseYear).child(exerciseWeek).child(exerciseKey).once("value", function(snapshot) {
             var e = snapshot.val();
             exerciseRetrieved = e;
             //var keys = Object.keys(e);
@@ -74,7 +81,7 @@ application.post('/challenges', function(req, res, next) {
                 console.log("USERKEY");
                 console.log(userKey);
                 exerciseRetrieved["viewed"] = "false";
-                db.ref().child("users").child(userKey).child("Challenges").child(exerciseKey).update(exerciseRetrieved);
+                db.ref().child("users").child(userKey).child("Challenges").child(exerciseYear).child(exerciseWeek).child(exerciseKey).update(exerciseRetrieved);
             });
 
             // //Set up apn with the APNs Auth Key
@@ -133,7 +140,7 @@ application.post('/challenges', function(req, res, next) {
             //});
         });
     } else {
-        db.ref().child("users").child(userID).child("Clients").child(clientKey).child("Exercises").child(exerciseKey).once("value", function(snapshot) {
+        db.ref().child("users").child(userID).child("Clients").child(clientKey).child("Exercises").child(exerciseYear).child(exerciseWeek).child(exerciseKey).once("value", function(snapshot) {
             var e = snapshot.val();
             exerciseRetrieved = e;
             //var keys = Object.keys(e);
@@ -143,7 +150,7 @@ application.post('/challenges', function(req, res, next) {
                 var userKey = snapshot.val()
                 console.log(userKey);
                 exerciseRetrieved["viewed"] = "false";
-                db.ref().child("users").child(userKey).child("Challenges").child(exerciseKey).update(exerciseRetrieved);
+                db.ref().child("users").child(userKey).child("Challenges").child(exerciseYear).child(exerciseWeek).child(exerciseKey).update(exerciseRetrieved);
             });
 
             //Set up apn with the APNs Auth Key
